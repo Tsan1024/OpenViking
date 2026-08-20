@@ -3,6 +3,7 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/noto-sans";
 @import "highlight.js/styles/github.css";
+@import "katex/dist/katex.min.css";
 @import "streamdown/styles.css";
 
 @source "../node_modules/streamdown/dist/*.js";

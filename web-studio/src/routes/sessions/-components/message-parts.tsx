@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Streamdown } from 'streamdown'
 import { code } from '@streamdown/code'
 import { cjk } from '@streamdown/cjk'
+import { createMathPlugin } from '@streamdown/math'
 import { useTranslation } from 'react-i18next'
 import {
   CheckCircle2Icon,
@@ -16,7 +17,11 @@ import {
 import { cn } from '#/lib/utils'
 import { cleanVikingUri, VIKING_URI_RE } from '#/lib/viking-uri'
 
-const plugins = { code, cjk }
+const plugins = {
+  code,
+  cjk,
+  math: createMathPlugin({ singleDollarTextMath: true }),
+}
 const TOOL_REF_PAGE_SIZE = 5
 
 // ---------------------------------------------------------------------------

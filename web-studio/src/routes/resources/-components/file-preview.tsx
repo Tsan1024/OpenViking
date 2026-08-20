@@ -3,9 +3,11 @@ import type { ComponentProps, ReactNode } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import hljs from 'highlight.js/lib/core'
 import ReactMarkdown from 'react-markdown'
+import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 import { X, Pencil, Save, XCircle, Loader2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -655,6 +657,9 @@ const markdownComponents = {
   ),
 }
 
+const markdownRemarkPlugins = [remarkGfm, remarkMath]
+const markdownRehypePlugins = [rehypeKatex]
+
 function parseJsonlRecords(text: string): JsonlRecord[] {
   return text
     .replace(/\r\n/g, '\n')
@@ -860,7 +865,8 @@ function JsonlMarkdownBody({ content }: { content: string }) {
   return (
     <div className="prose prose-sm max-w-none break-words dark:prose-invert dark:prose-pre:bg-muted-foreground/20">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={markdownRemarkPlugins}
+        rehypePlugins={markdownRehypePlugins}
         components={markdownComponents}
       >
         {content || t('filePreview.jsonl.emptyMessage')}
@@ -1515,7 +1521,8 @@ export function FilePreview({
                         </header>
                         <article className="prose prose-sm max-w-none break-words rounded-md border bg-muted/20 p-3 dark:prose-invert dark:prose-pre:bg-muted-foreground/20">
                           <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
+                            remarkPlugins={markdownRemarkPlugins}
+                            rehypePlugins={markdownRehypePlugins}
                             components={markdownComponents}
                           >
                             {level.content}
@@ -1602,8 +1609,8 @@ export function FilePreview({
             markdownMode === 'preview' ? (
               <article className="prose prose-sm max-w-none break-words dark:prose-invert dark:prose-pre:bg-muted-foreground/20">
                 <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                  remarkPlugins={markdownRemarkPlugins}
+                  rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeKatex]}
                   urlTransform={(url) => url}
                   components={{
                     ...markdownComponents,

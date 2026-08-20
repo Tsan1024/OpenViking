@@ -36,7 +36,7 @@ vi.mock('../-hooks/viking-fm', () => ({
     isFetching: false,
     isLoading: false,
     preview: {
-      content: '[Target](./target.md)',
+      content: '[Target](./target.md)\n\n荷载标准值：$q_{\\mathrm{k}} = 10.5\\mathrm{kN / m}$',
       fileType: 'markdown',
       shouldAutoRead: true,
     },
@@ -87,5 +87,6 @@ describe('FilePreview Markdown links', () => {
 
     expect(onNavigate).toHaveBeenCalledOnce()
     expect(onNavigate).toHaveBeenCalledWith('viking://resources/wiki/target.md')
+    expect(document.querySelector('.katex')).not.toBeNull()
   })
 })
